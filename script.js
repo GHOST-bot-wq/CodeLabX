@@ -54,17 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Close all
             faqItems.forEach(faq => {
                 faq.classList.remove('active');
-                const answer = faq.querySelector('.faq-answer');
-                if(answer) answer.style.maxHeight = null;
             });
 
             // If it wasn't active, open it
             if (!isActive) {
                 item.classList.add('active');
-                const answer = item.querySelector('.faq-answer');
-                if(answer) {
-                    answer.style.maxHeight = answer.scrollHeight + 40 + "px"; // +40 for padding
-                }
             }
         });
     });
@@ -457,3 +451,147 @@ function initAgentDemo() {
         }, 1200);
     }
 }
+
+// Codey Chat Logic
+function initCodeyChat() {
+    const chatBtn = document.getElementById('codey-chat-btn');
+    const closeBtn = document.getElementById('codey-close-btn');
+    const chatWindow = document.getElementById('codey-chat-window');
+    const chatMessages = document.getElementById('codey-chat-messages');
+    const inputField = document.getElementById('codey-input');
+    const sendBtn = document.getElementById('codey-send-btn');
+    
+    if (!chatBtn || !chatWindow) return;
+
+    let isFirstOpen = true;
+
+    // Get or create session context
+    const getSessionData = () => {
+        const data = localStorage.getItem('codey_session');
+        if (data) {
+            try {
+                const parsed = JSON.parse(data);
+                // check expiration (24h = 86400000ms)
+                if (Date.now() - parsed.timestamp < 86400000) {
+                    return parsed;
+                }
+            } catch (e) { }
+        }
+        // Generate new uuid for session
+        const newSession = {
+            session_id: 'sess_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+            timestamp: Date.now()
+        };
+        localStorage.setItem('codey_session', JSON.stringify(newSession));
+        return newSession;
+    };
+
+    const sessionData = getSessionData();
+
+    const appendMessage = (text, sender) => {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `codey-message ${sender}`;
+        msgDiv.textContent = text;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+
+    const setInputState = (disabled) => {
+        inputField.disabled = disabled;
+        sendBtn.disabled = disabled;
+    };
+
+    // enable initial send button state if there's text
+    inputField.addEventListener('input', () => {
+        sendBtn.disabled = !inputField.value.trim();
+    });
+
+    const showTyping = () => {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'codey-typing';
+        typingDiv.id = 'codey-typing-indicator';
+        typingDiv.innerHTML = '<span></span><span></span><span></span>';
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+
+    const removeTyping = () => {
+        const indicator = document.getElementById('codey-typing-indicator');
+        if (indicator) indicator.remove();
+    };
+
+    // Open/Close
+    chatBtn.addEventListener('click', () => {
+        chatWindow.classList.toggle('active');
+        if (chatWindow.classList.contains('active')) {
+            inputField.focus();
+            if (isFirstOpen) {
+                appendMessage('Olá, como posso te ajudar?', 'bot');
+                isFirstOpen = false;
+            }
+        }
+    });
+
+    closeBtn.addEventListener('click', () => {
+        chatWindow.classList.remove('active');
+    });
+
+    const sendMessage = async () => {
+        const text = inputField.value.trim();
+        if (!text) return;
+
+        // User message
+        appendMessage(text, 'user');
+        inputField.value = '';
+        setInputState(true);
+        showTyping();
+
+        try {
+            const response = await fetch('https://ghostg1www.app.n8n.cloud/webhook/8aecbedc-aaa4-49f9-b206-6b335ce6fae1', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify([{
+                    text: text,
+                    session_id: sessionData.session_id
+                }])
+            });
+
+            const result = await response.json();
+            removeTyping();
+            
+            // Expected that the result contains output
+            let botText = "Não foi possível processar a resposta.";
+            if (result && result.output) {
+                botText = result.output;
+            } else if (Array.isArray(result) && result[0] && result[0].output) {
+                 botText = result[0].output;
+            } else if (typeof result === 'string') {
+                 botText = result;
+            }
+
+            appendMessage(botText, 'bot');
+        } catch (error) {
+            removeTyping();
+            console.error(error);
+            appendMessage('Desculpe, ocorreu um erro de conexão. Tente novamente mais tarde.', 'bot');
+        } finally {
+            setInputState(false);
+            sendBtn.disabled = true; // Still disabled because input is empty now
+            inputField.focus();
+        }
+    };
+
+    sendBtn.addEventListener('click', sendMessage);
+    inputField.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+}
+
+// Ensure init is called
+document.addEventListener('DOMContentLoaded', () => {
+    initCodeyChat();
+});

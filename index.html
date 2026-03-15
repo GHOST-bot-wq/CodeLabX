@@ -604,41 +604,49 @@
                 <div class="faq-list">
                     <div class="faq-item card-glass reveal-fade-up">
                         <button class="faq-question">
-                            O que são agentes de IA?
-                            <i class="ph ph-caret-down"></i>
+                            <span>O que são agentes de IA?</span>
+                            <div class="faq-icon-wrapper"><i class="ph ph-plus"></i></div>
                         </button>
-                        <div class="faq-answer">
-                            <p>São sistemas inteligentes (como ChatGPT) configurados especificamente com os dados e processos da sua empresa. Eles podem atender clientes, analisar dados, vender e agir de forma proativa 24 horas por dia, agindo como colaboradores muito ágeis e infalíveis.</p>
+                        <div class="faq-answer-wrapper">
+                            <div class="faq-answer-content">
+                                <p>São sistemas inteligentes (como ChatGPT) configurados especificamente com os dados e processos da sua empresa. Eles podem atender clientes, analisar dados, vender e agir de forma proativa 24 horas por dia, agindo como colaboradores muito ágeis e infalíveis.</p>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="faq-item card-glass reveal-fade-up" style="transition-delay: 50ms;">
                         <button class="faq-question">
-                            Quanto custa uma automação?
-                            <i class="ph ph-caret-down"></i>
+                            <span>Quanto custa uma automação?</span>
+                            <div class="faq-icon-wrapper"><i class="ph ph-plus"></i></div>
                         </button>
-                        <div class="faq-answer">
-                            <p>O valor depende da complexidade do que será desenvolvido e integrado. Fazemos um diagnóstico do seu cenário e entregamos uma proposta em escopo e valor exato. O ROI (Retorno sobre Investimento) costuma ocorrer nos primeiros meses devido ao corte drástico no trabalho braçal.</p>
+                        <div class="faq-answer-wrapper">
+                            <div class="faq-answer-content">
+                                <p>O valor depende da complexidade do que será desenvolvido e integrado. Fazemos um diagnóstico do seu cenário e entregamos uma proposta em escopo e valor exato. O ROI (Retorno sobre Investimento) costuma ocorrer nos primeiros meses devido ao corte drástico no trabalho braçal.</p>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="faq-item card-glass reveal-fade-up" style="transition-delay: 100ms;">
                         <button class="faq-question">
-                            Quanto tempo leva para desenvolver?
-                            <i class="ph ph-caret-down"></i>
+                            <span>Quanto tempo leva para desenvolver?</span>
+                            <div class="faq-icon-wrapper"><i class="ph ph-plus"></i></div>
                         </button>
-                        <div class="faq-answer">
-                            <p>Projetos menores, como landing pages e automações simples e agentes básicos de atendimento podem levar entre 1 e 3 semanas de desenvolvimento e testes. Sistemas SaaS ou Fluxos Agênticos mais robustos podem levar de semanas a alguns meses. A consultoria visa sempre entregar no menor prazo útil (MVP).</p>
+                        <div class="faq-answer-wrapper">
+                            <div class="faq-answer-content">
+                                <p>Projetos menores, como landing pages e automações simples e agentes básicos de atendimento podem levar entre 1 e 3 semanas de desenvolvimento e testes. Sistemas SaaS ou Fluxos Agênticos mais robustos podem levar de semanas a alguns meses. A consultoria visa sempre entregar no menor prazo útil (MVP).</p>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="faq-item card-glass reveal-fade-up" style="transition-delay: 150ms;">
                         <button class="faq-question">
-                            Posso integrar com meu sistema atual?
-                            <i class="ph ph-caret-down"></i>
+                            <span>Posso integrar com meu sistema atual?</span>
+                            <div class="faq-icon-wrapper"><i class="ph ph-plus"></i></div>
                         </button>
-                        <div class="faq-answer">
-                            <p>Sim! Utilizamos nossos Fluxos Agênticos proprietários e webhooks customizados (ou APIs diretas) que permitem conectar praticamente qualquer sistema moderno que possua uma API (CRMs, ERPs, sistemas de pagamento, e-mails, bancos de dados, etc).</p>
+                        <div class="faq-answer-wrapper">
+                            <div class="faq-answer-content">
+                                <p>Sim! Utilizamos nossos Fluxos Agênticos proprietários e webhooks customizados (ou APIs diretas) que permitem conectar praticamente qualquer sistema moderno que possua uma API (CRMs, ERPs, sistemas de pagamento, e-mails, bancos de dados, etc).</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -701,10 +709,32 @@
         </div>
     </footer>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/5511900000000" class="floating-whatsapp" target="_blank" aria-label="Falar no WhatsApp">
-        <i class="ph-fill ph-whatsapp-logo"></i>
-    </a>
+
+    <!-- Codey Chat Agent -->
+    <div class="codey-chat-wrapper" id="codey-chat-wrapper">
+        <div class="codey-chat-window" id="codey-chat-window">
+            <div class="codey-chat-header">
+                <div class="codey-info">
+                    <i class="ph-fill ph-robot text-gradient"></i>
+                    <div>
+                        <h4>Codey</h4>
+                        <span>Agente de IA</span>
+                    </div>
+                </div>
+                <button class="codey-close-btn" id="codey-close-btn"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="codey-chat-body" id="codey-chat-messages">
+                <!-- Messages will appear here -->
+            </div>
+            <div class="codey-chat-input">
+                <input type="text" id="codey-input" placeholder="Digite sua mensagem...">
+                <button id="codey-send-btn" disabled><i class="ph-fill ph-paper-plane-right"></i></button>
+            </div>
+        </div>
+        <button class="codey-chat-btn" id="codey-chat-btn">
+            <i class="ph-fill ph-chat-teardrop-text"></i>
+        </button>
+    </div>
 
     <script src="script.js"></script>
 </body>
