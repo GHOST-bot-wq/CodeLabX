@@ -441,7 +441,7 @@ function initAgentDemo() {
                 endMessage.innerHTML = `
                     <div class="message-content" style="background: transparent; border: none; padding: 0;">
                         <p>Nossa equipe entrará em contato em breve. Se preferir acelerar, chame agora:</p>
-                        <a href="https://wa.me/5511900000000" target="_blank" class="btn btn-primary btn-glow mt-2 flex-center" style="font-size: 0.85rem; width: 100%;">Agendar no WhatsApp <i class="ph-fill ph-whatsapp-logo"></i></a>
+                        <a href="https://wa.me/5562991747342?text=Olá%2C%20vim%20pelo%20site%20da%20CodeLabX.%20Quero%20gerar%20mais%20contatos%20e%20automatizar%20meu%20atendimento%20com%20IA" target="_blank" class="btn btn-primary btn-glow mt-2 flex-center" style="font-size: 0.85rem; width: 100%;">Agendar no WhatsApp <i class="ph-fill ph-whatsapp-logo"></i></a>
                     </div>
                 `;
                 chatBody.appendChild(endMessage);
